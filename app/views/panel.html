@@ -1,0 +1,260 @@
+<div class="panel panel-info visible"> 
+                <div class="logo">
+                    <h1><img class="img-resposive" src="images/logo.svg"><strong>Escape</strong></h1>
+                </div>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="search_airport">Origin Airport</label>
+                        <div class="input-group">
+                        <span class="input-group-addon"><img src="images/airplane.svg"></span>
+                        
+                        <select id="search_airport"  ng-model="searchParameters.origin" placeholder="DFW - Dallas Fort Worth Airport"  data-toggle="tooltip" data-placement="right" title="Search - Calls the Destination Finder API <https://developer.sabre.com/docs/read/rest_apis/air/search/destination_finder>." style="width: 100%; line-height: 50px"></select>
+                    </div>
+<!--                         <div class="input-group">
+                            <span class="input-group-addon"><img src="images/airplane.svg"></span>
+                            <select   ng-model="searchParameters.origin" ng-options="item.code +' - '+ item.name + ' - ' + item.city for item in departureAirports track by item.code" class="form-control search-airport" id="departureAirport"  data-toggle="tooltip" data-placement="right" title="Search - Calls the Destination Finder API <https://developer.sabre.com/docs/read/rest_apis/air/search/destination_finder>." placeholder="DFW - Fort Worth International Airport - Dallas" style="width: 100%">
+                                <option value="DFW">DFW - Fort Worth International Airport - Dallas</option>
+                            </select>
+                        </div>  -->
+ 
+<!--                         <div class="input-group">
+                            <span class="input-group-addon"><img src="images/airplane.svg"></span>
+                                    <input type="type" ng-model="searchParameters.origin" ng-model-options="{ updateOn: 'default blur'}" class="form-control" id="origin_airport" placeholder="Enter airport code..." >
+
+                        </div> -->
+                    </div>
+                    <div class="row">
+                        <div class="range_inputs>">
+                            <div class="form-group col-lg-6">
+                                <label for="earliest_departure">Earliest Departure</label>
+                                <div class="input-group date" id="earliest_departure">
+                                    <span class="input-group-addon"><img src="images/calendar_early.svg"></span><input ng-model="searchParameters.earliestdeparturedate" type="text" id="early_departure" name="earliest_departure" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group col-lg-6">
+                                <label for="search">Latest Departure</label>
+                                <div class="input-group date" id="latest_departure">
+                                    <span class="input-group-addon"><img src="images/calendar_late.svg"></span><input ng-model="searchParameters.latestdeparturedate"type="text" name="latest_departure" class="form-control">
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+
+                    <div class="form-inline form-group">
+                        <label for="length_of_stay">Length of Stay</label>
+                        <select class="form-control" id="length_of_stay" value="4">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="point_of_sale">Point of Sale</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><img src="images/pin-turquoise.svg"></span>
+                            <select  ng-model="searchParameters.pointofsalecountry" ng-model-options="{ updateOn: 'default blur'}" ng-options=" item.CountryCode +' - '+ item.CountryName for item in pointsOfSale.Countries track by item.CountryCode" data-toggle="tooltip" data-placement="right" title="Point of Sale – Is defined by the Point of Sale Country Code Lookup<https://developer.sabre.com/docs/read/rest_apis/air/utility/point_of_sale_country_code_lookup> Utility API" class="form-control" id="point_of_sale" >
+                            </select>
+                        </div>
+                     
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox"><input name="additionalOptions" type="checkbox" value="add_options" data-toggle="collapse" data-target="#additional_options"  ng-click="addOptions()" >Additional options</label>
+                    </div>
+                        <div id="additional_options" class="collapse in">
+                              <label>
+                                Maximum Fare
+                              </label>
+                            <div class="input-group">
+                                            
+                                    <span class="input-group-addon"><img src="images/max_fare.svg"></span>
+                                    <input type="type" ng-model="searchParameters.maxfare" ng-model-options="{ updateOn: 'default blur'}" class="form-control" name="max_fare" id="max_fare" placeholder="Enter maximum fare..." integer>
+                                    
+                            </div> 
+
+                            <div class="form-group">
+                                <label for="theme"  placeholder="Choose one...">Preferred Theme</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><img src="images/beach.svg"></span>
+                                    <select  ng-model="searchParameters.theme" ng-model-options="{updateOn: 'default blur'}"  ng-options=" item.Theme for item in themes.Themes track by item.Theme" data-toggle="tooltip" data-placement="right" title="Preferred Theme - Is defined by the Travel Theme Lookup<https://developer.sabre.com/docs/read/rest_apis/air/utility/travel_theme_lookup> Utility API"  class="form-control" id="theme">                                       
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="region"  placeholder="Choose one...">Region</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><img src="images/region.svg"></span>
+                                    <select  ng-model="searchParameters.region" class="form-control" id="region">
+                                            <option value="Africa">Africa</option>
+                                            <option value="Asia%20Pacific">Asia Pacific</option>
+                                            <option value="Europe">Europe</option>
+                                            <option value="Latin%20America">Latin America</option>
+                                            <option value="Middle%20East">Middle East</option>
+                                            <option value="North%20America">North America</option>                               
+                                    </select> 
+                                </div>
+                            </div>
+                            <div class="form-inline form-group">
+                                <label>Top Destinations</label>
+                                <select ng-model="searchParameters.topdestinations" class="form-control" id="Top Destinations">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                    <option value="25">25</option>
+                                    <option value="26">26</option>
+                                    <option value="27">27</option>
+                                    <option value="28">28</option>
+                                    <option value="29">29</option>
+                                    <option value="30">30</option>
+                                    <option value="31">31</option>
+                                    <option value="32">32</option>
+                                    <option value="33">33</option>
+                                    <option value="34">34</option>
+                                    <option value="35">35</option>
+                                    <option value="36">36</option>
+                                    <option value="37">37</option>
+                                    <option value="38">38</option>
+                                    <option value="39">39</option>
+                                    <option value="40">40</option>
+                                    <option value="41">41</option>
+                                    <option value="42">42</option>
+                                    <option value="43">43</option>
+                                    <option value="44">44</option>
+                                    <option value="45">45</option>
+                                    <option value="46">46</option>
+                                    <option value="47">47</option>
+                                    <option value="48">48</option>
+                                    <option value="49">49</option>
+                                    <option value="50">50</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="button-right">
+                        <a ng-click="searchRequest()" class="button turquoise-button" role="button">SEARCH</a>
+                    </div>
+</div>    
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>  </br>
+        Sorry! There are no destinations that match your search request! </br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="loaderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Loading destinations for you...</p> 
+        <div class="loader">
+            <div class="loader2">
+            </div>
+
+        </div>
+                <br/>
+            <br/>
+            <br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<script type="text/javascript">//SCRIPT JS  
+'use strict';
+
+
+      $('.collapse').collapse();
+
+        $(function(){
+            $('select[value]').each(function(){
+                $(this).val(this.getAttribute('value'));
+            });
+        });
+
+
+  
+            $('#earliest_departure.input-group.date').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: 'today',
+                endDate: '+90d',
+                orientation: 'top left',
+                autoclose: true
+            });
+            $('#latest_departure.input-group.date').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: 'today',
+                endDate: '+90d',
+                orientation: 'top left',
+                autoclose: true
+            });      
+
+
+            var plus7days = new Date();
+            plus7days.setDate(plus7days.getDate() + 7 );
+            $('#earliest_departure').datepicker('setDate', plus7days);
+            $('#earliest_departure').datepicker('update');
+            $('#earliest_departure').val('');
+
+            var plus21days = new Date();
+            plus21days.setDate(plus21days.getDate() + 21 );
+            $('#latest_departure').datepicker('setDate', plus21days);
+            $('#latest_departure').datepicker('update');
+            $('#latest_departure').val('');
+
+
+            $('.search-airport').select2({
+                placeholder: "DFW - Dallas Fort Worth Airport"
+                    
+            });
+
+
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+
+</script>   

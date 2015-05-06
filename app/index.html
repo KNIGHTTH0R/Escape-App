@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/css/datepicker.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/css/datepicker3.css" />
+    <link rel="stylesheet" href="bower_components/select2-ng/select2.css" />
+    <link rel="stylesheet" href="bower_components/angular-chart.js/dist/angular-chart.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="App">
+    <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+
+
+        <!-- NAVBAR -->
+        <nav id="social-sidebar">
+            <div id="navbarcontainer">    
+                <ul>
+                    <li>
+                        <a ui-sref='home' onclick="myFunction()" class="entypo-navinfo"><img class="img" src="images/search.svg" id="view_search_panel" alt="Search with InspireMe">
+                            <span>SEARCH AGAIN</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="entypo-navinfo logo" href="#"><img class="img" src="images/logo_nav.svg" alt="InspireMe logo"><strong>Escape</strong></a>
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="aboutFunction()" class="entypo-navinfo"><img class="img" src="images/about.svg" alt="About InspireMe">
+                            <span>ABOUT</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- CONTENT -->
+        <div class="row">
+          <div ui-view></div>
+        </div>
+
+
+        <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content about-text">
+      <div class="modal-body"> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>  </br>
+        <div>
+             <h2>Welcome to <strong>Escape</strong>!</h2>
+        </div>
+        <div class="about-text" style="font-size: 11px; text-align:justify">
+            <p>
+               Escape is an inspirational air shopping application. It uses several of REST APIs from Sabre Dev Studio.
+            </p>
+            <p>
+                Search - Calls the Destination Finder API<br/> https://developer.sabre.com/docs/read/rest_apis/air/search/destination_finder.
+            </p>
+            <p> Point of Sale – Is defined by the Point of Sale Country Code Lookup<br/> https://developer.sabre.com/docs/read/rest_apis/air/utility/point_of_sale_country_code_lookup Utility API
+            </p>
+            <p>
+                Preferred Theme - Is defined by the Travel Theme Lookup <br/>https://developer.sabre.com/docs/read/rest_apis/air/utility/travel_theme_lookup Utility API"
+            </p>
+            <p>The search parameters are used to consume a Destination Finder API request, and display results on a Google Maps. <br/>https://developer.sabre.com/docs/read/rest_apis/air/search/destination_finder
+            </p>By clicking later arrow under the graph the app makes a call to Lead Price Callendar to get fares info for the next 192 days. <br/>https://developer.sabre.com/docs/read/rest_apis/air/search/lead_price_calendar
+            <p>
+                The seasonality indicator is based on the destination and date selected and Seasonality API <br/>https://developer.sabre.com/docs/read/rest_apis/air/intelligence/travel_seasonality.
+            </p>
+            <p> If US Point of Sale Country has been selected app provides Advice Indicator based on Low Fare Forecast API Call for Origin/Destination and specific Date selected.<br/> https://developer.sabre.com/docs/read/rest_apis/air/intelligence/low_fare_forecast
+                </p>
+                <p> The view flights button makes a call to to InstaFligh Search API and provides flight info for top ten connections https://developer.sabre.com/docs/read/rest_apis/air/search/instaflights_search
+                </p>
+        </div>
+        <div class="about-text" style="font-size: 11px;">
+            Developed by <a href="http://www.cometari.com/"><strong> Cometari </strong>Dedicated Solutions </a> 2015
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+    <!-- Google Analytics -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/chartjs/Chart.js"></script>
+    <script src="bower_components/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="bower_components/moment/moment.js"></script>
+    <script src="bower_components/google-maps-utility-library-v3-infobubble/lib/infobubble.js"></script>
+    <script src="bower_components/select2-ng/select2.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/lodash/dist/lodash.compat.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.js"></script>
+    <script src="bower_components/Chart.js/Chart.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/selectize.js"></script>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/script.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/map.js"></script>
+        <script src="scripts/controllers/panel.js"></script>
+        <script src="scripts/controllers/searchRequest.js"></script>
+        <script src="scripts/controllers/winTemplate.js"></script>
+        <!-- endbuild -->
+
+     <script>
+        function myFunction() {
+            location.reload();
+        };
+
+         function aboutFunction() {
+            $('#aboutModal').modal('show')
+        };
+
+        
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,17 @@
+  <div class="container-fluid-map container middle">
+	<ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options">
+      <ui-gmap-markers models="myMarkers" coords="'coords'" doCluster=true icon="'icon'" click="'onMarkerClicked'"  fit='true' >
+         <ui-gmap-windows  show="show"  closeClick="'closeClick'" templateUrl="'tmpl'" templateParameter="'tmplParams'"
+         ng-cloak>
+
+              <!--  <div  class="markerWindow">
+                  <div ng-non-bindable  ng-controller='InfoController'  id="destinationTag">{{ city }} {{ id }} for <b>{{minFare}} {{currencyCode}} </b> <a class="btn" ng-click="clickedButtonInWindow()" id="view-destination-info"><img src="images/destination-arrow.svg"></a></div>
+                  </div>
+              </div>
+                     <div ng-non-bindable  id="destinationTag">{{ id }} for <b>{{minFare}} {{currencyCode}} </b> <a class="btn" ng-click="$rootScope.openDestinationPanel()" id="view-destination-info"><img src="images/destination-arrow.svg"></a></div>
+                </div> -->
+         </ui-gmap-windows>
+      </ui-gmap-markers>
+  
+    </ui-gmap-google-map>
+ </div>

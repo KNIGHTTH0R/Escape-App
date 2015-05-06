@@ -1,0 +1,193 @@
+<section>
+<div ng-class="{'hidden': isHidden} "class="panel panel-info" id="destination-info">
+                <div class="button-right">
+                    <a class="button close-panel-button" ng-click="closePanel()"role="button" id="close_destination_panel">X</a>
+                </div>
+                <div class="dastination-name">
+                    <h3>Destination: <b>{{destinationCard.city}} {{destinationCard.id}}</b></h3>
+                    <h3>Overall Lowest Fare: <b>{{destinationCard.minFare}} {{destinationCard.currencyCode}}</b></h3>
+                    
+                </div>
+                <div ng-show="chartTabShow">              
+                <div class="destination-chart">
+                    <canvas id="destination-chart"></canvas>
+                </div>
+            </div>
+                <div class="row">
+                    <div class="col-xs-10">
+                                               
+                    </div> 
+                    <div class="col-xs-2 box">
+                        <p class="loader10"  ng-class="{'hidden': isLoading} " ></p>
+                        
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 past" >
+                        <a href="#" ng-class="{'hidden': isHiddenPast}" ng-click="previousChart()">&lt;  EARLIER</a>
+                    </div>
+             
+                     <div class="col-xs-6 future">
+                       <a href="#"  ng-class="{'hidden': isHiddenFuture}" ng-click="nextChart()">LATER  &gt;</a>
+                    </div>
+
+                   
+                  
+                </div>
+                <div class="destination-info">
+                  <h4>Lowest fare:  <b>{{tripInfo.lowestFare}}  {{destinationCard.currencyCode}}</b></h4>
+                    <h4>Departure date:  <b>{{tripInfo.departureDate}}</b></h4>
+                    <h4>Return date:  <b>{{tripInfo.arrivalDate}}</b></h4>
+                    <h4 ng-class="{'hidden': isDestinationRankChosen} " >Destination Rank:  <b>{{tripInfo.destinationRank}}</b></h4>
+                    <h4>Season:  <b>{{tripInfo.season}}</b></h4>
+                    <h4 ng-class="{'hidden': isPointOfSaleUS} ">Fare Forecast Advice:  <b>{{tripInfo.fareForcastAdvise}}</b></h4>
+                </div>
+                <div class="button-right">
+                    <button class="button turquoise-button" ng-click="viewFlights()" id="view-flights-panel" role="button">VIEW FLIGHTS</button>
+                </div>
+</div>
+
+<div ng-class="{'hidden': isHiddenFlightsPanel}" class="panel flights-panel"  id="view-flights">
+                    <div class="row flights-panel-title">
+                        <div class="col-xs-3">
+                            <b>{{instaFlightResponse.PricedItineraries[0].AirItinerary.OriginDestinationOptions.OriginDestinationOption[0].FlightSegment[0].DepartureAirport.LocationCode}} - {{instaFlightResponse.PricedItineraries[0].AirItinerary.OriginDestinationOptions.OriginDestinationOption[1].FlightSegment[0].DepartureAirport.LocationCode}}</b>
+                        </div>
+                        <div class="col-xs-3 flight-dates">
+                            Departure: {{instaFlightResponse.DepartureDateTime}} <br/>Return: {{instaFlightResponse.ReturnDateTime}}
+                        </div>
+                        <div class="col-xs-4 lowest-fare">
+                            Lowest Fare: <b>{{instaFlightResponse.PricedItineraries[0].AirItineraryPricingInfo.ItinTotalFare.TotalFare.Amount}} {{instaFlightResponse.PricedItineraries[0].AirItineraryPricingInfo.ItinTotalFare.TotalFare.CurrencyCode}}</b>
+                        </div>
+                        <div class="col-xs-2 button-right">
+                            <button class="btn close-button" ng-click="hideFlights()" id="abandon-flights-view">CLOSE</button>
+                        </div>
+                    </div>
+                <div class="row">
+                     <div class="panel-group" id="accordion">
+                        <div class="panel panel-default" ng-repeat="flight in myFlights">
+                            <div class="panel-heading vertical-center">
+                                <div class="panel-title row">
+                                    <div class="col-sm-3 flight-price" id="flight-price">
+                                         {{flight.totalFare}} {{flight.currency}}
+                                    </div>
+                                    <div class="col-sm-9 flight-info"  id="flight-info">     
+                                        <a data-target="#{{$index}}" data-toggle="collapse" data-parent="#accordion">
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    {{flight.carrier}} 
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <b>{{flight.departureTime}}</b> {{flight.origin}}    ->   <b>{{flight.arrivalTime}}</b> {{flight.destination}}
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    {{flight.flightLength}}
+                                                </div>
+                                                <div class="col-xs-2">
+                                                   {{flight.noChanges}}
+                                                </div>
+                                                <div class="col-xs-2">
+
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    {{flight.carrierB}}  
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <b>{{flight.departureTimeB}}</b> {{flight.destination}}  ->   <b>{{flight.arrivalTimeB}}</b> {{flight.origin}}
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    {{flight.flightLengthB}}
+                                                </div>
+                                                <div class="col-xs-2">
+                                                   {{flight.noChangesB}}
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <img class="img" src="images/caret.svg">
+                                                </div>    
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-collapse collapse" id="{{$index}}">
+                                <div class="panel-body">
+                                    <div class="col-sm-3 flight-price" id="flight-price">
+                                        {{flight.totalFare}} {{flight.currency}}
+                                    </div>
+                                    <div class="col-sm-9"  id="flight-info-more">
+                                        <div class="route">
+                                            {{flight.origin}} - {{flight.destination}}
+                                        </div>   
+                                        <div ng-repeat="segment in flight.segments">
+                                            <div class="flight-no">
+                                                {{segment.airline}}  Flight no. {{segment.airline}}{{segment.flightNo}}
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    D: <b>{{segment.departureTime}}</b> {{segment.departureAirport}}   
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    A: <b>{{segment.arrivalTime}}</b> {{segment.arrivalAirport}} 
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    {{segment.length}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="route">
+                                            {{flight.destination}} - {{flight.origin}}
+                                        </div>
+                                        <div ng-repeat="segment in flight.segmentsB">
+                                            <div class="flight-no">
+                                                {{segment.airline}}  Flight no. {{segment.airline}}{{segment.flightNo}}
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-4">
+                                                    D: <b>{{segment.departureTime}}</b> {{segment.departureAirport}}   
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    A: <b>{{segment.arrivalTime}}</b> {{segment.arrivalAirport}} 
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    {{segment.length}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+</section>
+
+
+
+<div class="modal fade" id="myFlightsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body"> 
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>  </br>
+        Sorry! We can't show you any flights for this request! </br>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="myFlightsLoaderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>Searching for flight connections...</p> 
+        <div class="loader">
+            <div class="loader2">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
