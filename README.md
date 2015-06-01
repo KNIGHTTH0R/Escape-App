@@ -1,6 +1,8 @@
 # Escape-App
 An Inspirational air shopping map based application that uses a combination search and intelligent APIs in a simple workflow. Search by budget, theme, region to explore possibilities of your next journey.
 
+This App uses the Php Brigde found here https://github.com/SabreDevStudio/SabrePhpBrigde
+
 Additional Resources
 ====================
 Sabre API documentation and resources can be found http://developer.sabre.com
