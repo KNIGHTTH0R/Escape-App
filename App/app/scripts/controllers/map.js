@@ -3,7 +3,10 @@
 
 angular.module('App')
   .controller('MapCtrl',['$scope', 'uiGmapGoogleMapApi', 'searchResults', 'destinationsResults', function ($scope, uiGmapGoogleMapApi, searchResults, destinationsResults) {
-  		 var styleArray = [
+         
+
+    // Settings for the map styles and options
+    var styleArray = [
    {
         "featureType": "landscape.natural",
         "elementType": "geometry.fill",
@@ -149,16 +152,16 @@ angular.module('App')
   ];
         
 
-  		$scope.map = {
+        $scope.map = {
             center: {latitude: 32.8972,  longitude: -97.03769}, 
             zoom: 5
         };
-  		$scope.map.options = {
+        $scope.map.options = {
             styles: styleArray,
             backgroundColor: '#7dcdcd',
             maxZoom: 9,
             minZoom: 2
-  		};
+        };
 
 
      
@@ -166,7 +169,6 @@ angular.module('App')
 
         $scope.$on('searchResultsSet', function(){
                 $scope.locations = searchResults.getProperties();
-                console.log($scope.locations);
                 var markers = [];
                 for (var i = 0; i < $scope.locations.length; i++){
                     $scope.destination = $scope.locations[i];
@@ -203,7 +205,7 @@ angular.module('App')
 
         });
 
-  	 uiGmapGoogleMapApi.then(function(maps) {
+     uiGmapGoogleMapApi.then(function(maps) {
 
      });
 

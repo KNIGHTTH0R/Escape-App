@@ -2,9 +2,15 @@
 
 /**
  * @ngdoc overview
- * @name App
+ * @name ESCAPE APP
  * @description
- * # App
+ * An Inspirational air shopping map based application that uses a
+ * combination of search and intelligent APIs in a simple workflow. 
+ * Search by budget, theme and region to explore 
+ * possibilities of your next journey.
+ *
+ * Application was developed by Cometari Dedicated Solutions 
+ * Cracow, Poland 2015
  *
  * Main module of the application.
  */

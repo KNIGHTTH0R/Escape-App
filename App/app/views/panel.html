@@ -44,11 +44,11 @@
 
                     <div class="form-inline form-group">
                         <label for="length_of_stay">Length of Stay</label>
-                        <select class="form-control" id="length_of_stay" value="4">
+                        <select class="form-control" ng-model="searchParameters.lengthofstay" id="length_of_stay" value="4">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
-                            <option value="4">4</option>
+                            <option value="4" ng-selected="true">4</option>
                             <option value="5">5</option>
                             <option value="6">6</option>
                             <option value="7">7</option>

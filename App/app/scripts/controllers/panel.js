@@ -4,24 +4,10 @@ angular.module('App')
   .controller('SearchCtrl', function ($scope, $http, searchResults, originalSearch) {
      
 
-/*      $scope.airportsURL = 'http://bridge.sabre.cometari.com/airports.php?code=';
-
-      $scope.airportCodes = 'K';*/
-
-
-
-
-
-/*      $scope.departureAirports = [];
-      $http({
-              method: 'GET',
-              url: $scope.airportsURL + $scope.airportCodes   
-          }).success(function (result) {
-          $scope.departureAirports = result;
-      });
-*/
 
       $scope.pointsOfSale = [];
+
+      //request to fill in the list of Point of Sale Countries
       $http({
               method: 'GET',
               url: 'http://bridge.sabre.cometari.com/lists/supported/pointofsalecountries'   
@@ -29,7 +15,10 @@ angular.module('App')
           $scope.pointsOfSale = result;
       });
 
+
       $scope.themes = [];
+
+      //request to fill in the list of possible trip themes
       $http({
               method: 'GET',
               url: 'http://bridge.sabre.cometari.com/lists/supported/shop/themes'   
@@ -56,9 +45,11 @@ angular.module('App')
         } 
       };
 
-      $scope.searchParameters = {origin: "DFW", earliestdeparturedate: $scope.plus7days_date,  latestdeparturedate: $scope.plus21days_date, lengthofstay: "4", pointofsalecountry: {CountryCode: "US"}, theme: {Theme: ""}, maxfare: "",region: "" , topdestinations: ""}; 
+      $scope.searchParameters = {origin: "DFW", earliestdeparturedate: $scope.plus7days_date,  latestdeparturedate: $scope.plus21days_date, lengthofstay: '', pointofsalecountry: {CountryCode: "US"}, theme: {Theme: ""}, maxfare: "",region: "" , topdestinations: ""}; 
       $scope.newAirport = '';
 
+
+      //ajax call to fill in the list of matching airports when the user is typing
       var $select = $('#search_airport').selectize({
                 valueField: 'code',
                 labelField: 'code',
@@ -92,6 +83,12 @@ angular.module('App')
       
       $scope.selectizeControl = $select[0].selectize;
 
+      // ***
+      //this function, invoked by clicking the search button,
+      //creates a URL to make a request with all the parameters selected by the user.
+      //If the user didn't select some of the required parameters the URL is filled with default values
+      // ***
+
       $scope.searchRequest = function(){
         $('#loaderModal').modal({
             backdrop: 'static',
@@ -100,13 +97,15 @@ angular.module('App')
        
        
         $scope.searchRequestParameters = $scope.searchParameters;
-        originalSearch.setSearchRequest($scope.searchRequestParameters);
-      $scope.airport = '';
+        
+        $scope.airport = '';
 
         if($scope.searchRequestParameters.origin === ""){
             $scope.airport = 'http://bridge.sabre.cometari.com/shop/flights/fares?origin=DFW';
+            
         }else{
             $scope.airport = 'http://bridge.sabre.cometari.com/shop/flights/fares?origin='+$scope.searchRequestParameters.origin;
+           
         };
           
         $scope.earliestdeparture = '';
@@ -128,7 +127,8 @@ angular.module('App')
         $scope.lengthStay = '';
 
         if($scope.searchRequestParameters.lengthofstay === ""){
-            $scope.lengthStay = "4";
+            $scope.lengthStay = '&lengthofstay=4';
+            $scope.searchRequestParameters.lengthofstay = 4;
         }else{
             $scope.lengthStay = '&lengthofstay='+$scope.searchRequestParameters.lengthofstay;
         };
@@ -174,12 +174,13 @@ angular.module('App')
                   $scope.lengthStay+$scope.salePoint +
                   '&ac2lonlat=1';          
         };
-
-       $http.get($scope.destinationFinderURL).
+        originalSearch.setSearchRequest($scope.searchRequestParameters);
+        
+        //get request to Destination Finder API via Cometari Bridge
+        $http.get($scope.destinationFinderURL).
             success(function(data, status, headers, config) {
                     $scope.destinations = data;
                     if($scope.destinations.length != 0){
-                    
                       searchResults.setProperties($scope.destinations);
                     
                     $(".panel-info").removeClass("visible");

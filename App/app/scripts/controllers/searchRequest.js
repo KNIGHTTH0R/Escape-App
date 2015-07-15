@@ -2,17 +2,17 @@
 
 angular.module('App')
   .controller('SearchRequestCtrl', ['$scope', '$http','uiGmapGoogleMapApi', 'destinationInfo', 'originalSearch', function ($scope, $http, uiGmapGoogleMapApi, destinationInfo, originalSearch) {
-  		$scope.isHidden = true;
-  		$scope.isHiddenFlightsPanel = true;
+        $scope.isHidden = true;
+        $scope.isHiddenFlightsPanel = true;
         $scope.isHiddenFuture = false;
         $scope.isHiddenPast = true;
-         $scope.isPointOfSaleUS = true;
-          $scope.isLoading = true;
+        $scope.isPointOfSaleUS = true;
+        $scope.isLoading = true;
         $scope.chartTabShow = false;
-  		$scope.seasonalityURL ='';
+        $scope.seasonalityURL ='';
         $scope.fareForcastURL ='';
         $scope.fareForcast = {Recommendation: ''};
-		$scope.lastLabel ='';
+        $scope.lastLabel ='';
         var today = moment();
         today.format("YYYY-MM-DD");
 
@@ -78,6 +78,7 @@ angular.module('App')
             fareForcastAdvise: "0"
         };
 
+        // Options for chart (colouring, scales etc.). Escape App is using Chart.js library for creating chart. For reference go to: http://www.chartjs.org/
         $scope.options = {
             //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
             scaleBeginAtZero : true,
@@ -235,21 +236,19 @@ angular.module('App')
             onAnimationComplete: function(){}
         };
 
+        // Setting the context for the pricing chart
         $scope.ctx = $("#destination-chart").get(0).getContext("2d");
         $scope.myBarChart = new Chart($scope.ctx).Bar($scope.chartData, $scope.options);
         $scope.myCanvas =  document.getElementById('destination-chart');
 
-					
-  		$scope.$on('destinationInfoSet', function(){
-  			$scope.isHidden = false;
+                    
+        $scope.$on('destinationInfoSet', function(){
+            $scope.isHidden = false;
             $scope.chartTabShow = true;
             $scope.chartSets = [];
             $scope.chartSetIndex = 0;
-            
-		 	$scope.destinationCard =  destinationInfo.getDestination();
-            
+            $scope.destinationCard =  destinationInfo.getDestination();
             $scope.tripInfo.destinationRank = $scope.destinationCard.destinationRank;
-    
 
             var dataLength = $scope.myBarChart.datasets[0].bars.length;       
             for(var j = 0; j < dataLength ; j++){
@@ -265,8 +264,7 @@ angular.module('App')
                     $scope.lastLabel = date;
                     $scope.newReturnLabel.push(returnDate);
             };
-
-                       
+      
             $scope.newData = [];
 
             for (var i = 0; i < $scope.destinationCard.fares.length; i++){
@@ -307,7 +305,7 @@ angular.module('App')
             $scope.firstChart = true;
             $scope.myBarChart.update();
             
-		    
+            
             $scope.tripInfo.lowestFare = $scope.destinationCard.minFare;
                for (var i = 0; i < $scope.destinationCard.fares.length; i++){
                     if ($scope.destinationCard.fares[i].lowestFare == $scope.tripInfo.lowestFare){
@@ -321,7 +319,7 @@ angular.module('App')
 
             };
 
-
+            // Checking the seasonality for the selected dates using Travel Seasonality API
             $scope.seasonalityURL = 'http://bridge.sabre.cometari.com/historical/flights/' + $scope.destinationCard.id +'/seasonality';
             $scope.seasonality = [];
             $http({
@@ -334,7 +332,7 @@ angular.module('App')
             $scope.tripInfo.season = $scope.seasonality.Seasonality[$scope.departureDay.week()-1].SeasonalityIndicator; 
             });
 
-
+            // If the Point of Sale country was set to US, the fare forcast advice is fetched from the Low Fare Forecast API
               if($scope.instaFlight.pointofsalecountry == "US"){
                 $scope.isPointOfSaleUS = false;
                  $scope.fareforcastURL = 'http://bridge.sabre.cometari.com/forecast/flights/fares?origin='+ $scope.instaFlight.origin +
@@ -354,8 +352,10 @@ angular.module('App')
                     };                
                 });
             };
-		});
+        });
 
+        // When the user clicks on the next chart for the first time a call to the Lead Price Calendar is made
+        // to get data for the next 192 days. 
          $scope.nextChart = function(){
             if($scope.firstChart){
               $scope.isLoading = false;
@@ -542,18 +542,24 @@ angular.module('App')
         
 
 
-		 $scope.closePanel = function(){
-		 	$scope.isHidden = true;
-		 };
+         $scope.closePanel = function(){
+            $scope.isHidden = true;
+         };
 
-		 $scope.viewFlights = function(){
-		 	$('#myFlightsLoaderModal').modal('show');
+         // viewFlights() function is invoked when the user clicks on the 'view flights button'. 
+         // It makes a call to InstaFlights API to get detailed information on the best 10 flights
+         // for selected date.
+
+         $scope.viewFlights = function(){
+            $('#myFlightsLoaderModal').modal('show');
 
             $scope.instaFlightURL = 'http://bridge.sabre.cometari.com/shop/flights?origin=' + $scope.instaFlight.origin + 
             '&destination='+ $scope.destinationCard.id + 
             '&departuredate=' + $scope.tripInfo.departureDate + 
             '&returndate=' + $scope.tripInfo.arrivalDate +
             '&pointofsalecountry=' + $scope.instaFlight.pointofsalecountry +'&limit=10';
+
+
 
             $scope.instaFlightResponse = {
                 PricedItineraries: []
@@ -658,11 +664,11 @@ angular.module('App')
             });
          
            
-		 };
+         };
 
-		 $scope.hideFlights = function(){
-		 	$scope.isHidden = false;
-		 	$scope.isHiddenFlightsPanel = true;
-		 };
+         $scope.hideFlights = function(){
+            $scope.isHidden = false;
+            $scope.isHiddenFlightsPanel = true;
+         };
 
       }]);
